@@ -1,2 +1,147 @@
 # CourseHub
-CourseHub
+
+CourseHub — це повноцінна full-stack платформа для управління курсами, створена на основі **React + TypeScript (frontend)** та **NestJS (backend)**.
+
+Проєкт включає:
+- Авторизацію та реєстрацію користувачів
+- Ролі користувачів (admin / user)
+- Список курсів + детальна сторінка курсу
+- CRUD-операції для курсів (admin)
+- API на NestJS із валідацією та обробкою помилок
+- Акуратну структуру проєкту та чистий код
+
+---
+
+## 🚀 Технології
+
+### **Frontend**
+- React
+- TypeScript
+- Vite
+- React Router
+- Fetch API
+- Context API (Auth)
+
+### **Backend**
+- NestJS
+- TypeScript
+- JWT аутентифікація
+- File-based JSON storage (mock database)
+- Swagger API
+
+---
+
+## 📁 Структура проєкту
+
+CourseHub/
+    frontend/
+        src/
+        public/
+        package.json
+        backend/
+        src/
+        bd/
+        package.json
+        README.md
+        LICENSE
+        .gitignore
+
+
+---
+
+## 🛠️ Установка та запуск
+
+### 1. Клонувати репозиторій
+
+git clone https://github.com/your-username/CourseHub.git
+
+cd CourseHub
+
+
+---
+
+## 🖥️ Запуск backend (NestJS)
+
+cd backend
+npm install
+npm run start:dev
+
+
+За замовчуванням бекенд працює на: http://localhost:4000
+
+
+
+Swagger документація: http://localhost:4000/api
+
+
+
+
+## 🌐 Запуск frontend (React + Vite)
+
+cd frontend
+npm install
+npm run dev
+
+Фронтенд буде доступний на: http://localhost:5173
+
+
+## 🔐 Дані для входу
+
+### **Admin**
+
+email: admin@example.com
+
+password: admin
+
+
+### **User**
+
+email: user@example.com
+
+password: user
+
+
+(Дані можуть змінюватися залежно від файлу `bd/users.json`.)
+
+
+
+## 📚 Основні можливості
+
+### 👤 **Авторизація**
+- Реєстрація нового користувача
+- Вхід / вихід
+- Зберігання токена в localStorage
+
+### 📘 **Курси**
+- Перегляд списку всіх курсів
+- Перегляд детальної інформації про курс
+- Пошук та фільтрація (опціонально)
+
+### 🔧 **Admin функції**
+- Створення нового курсу
+- Редагування курсу
+- Видалення курсу
+
+
+
+## 🧩 API ендпоінти (backend)
+
+- `POST /login`
+- `POST /register`
+- `GET /courses/all`
+- `GET /courses/:id`
+- `POST /courses/add` (admin)
+- `PUT /courses/:id` (admin)
+- `DELETE /courses/:id` (admin)
+
+## 📸 Скриншоти
+
+
+
+## 📄 License
+
+This project is proprietary.
+All rights reserved.
+
+The source code is provided for viewing and evaluation purposes only.
+Unauthorized use, copying, or distribution is prohibited.

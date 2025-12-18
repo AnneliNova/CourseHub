@@ -292,9 +292,8 @@ class JsonReader {
 
             const parsedJsonObject = JSON.parse(chunks);
             const isObjectNotFound = keys.some((key: string) => {
-              const { value, isStrictEquality } = queriesWithAdditionalInfo[
-                key
-              ];
+              const { value, isStrictEquality } =
+                queriesWithAdditionalInfo[key];
               const jsonObjectValue = parsedJsonObject[key];
 
               if (isStrictEquality || typeof jsonObjectValue !== 'string') {

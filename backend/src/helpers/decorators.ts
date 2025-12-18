@@ -22,7 +22,7 @@ export function Roles(...roles: string[]): CustomDecorator {
 
 export function ModelValidation<
   T,
-  P extends { errorStates: Promise<string[]> }
+  P extends { errorStates: Promise<string[]> },
 >(
   Model: {
     new (

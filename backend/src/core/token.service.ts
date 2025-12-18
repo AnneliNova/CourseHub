@@ -87,9 +87,8 @@ export class TokenService {
       return;
     }
     const signature = Buffer.from(base64Signature, 'base64');
-    const { publicKey, stringifiedData, creationDate } = this.tokens.get(
-      base64Signature,
-    );
+    const { publicKey, stringifiedData, creationDate } =
+      this.tokens.get(base64Signature);
     const timePassed = Date.now() - creationDate;
 
     if (timePassed >= this.tokenTimeLiving) {

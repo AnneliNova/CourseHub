@@ -34,10 +34,7 @@ export class AuthService {
     user: UserModel,
   ): Observable<SuccessfulRequest<string> | FailedRequest> {
     return jsonReader
-      .getSingleObject<UserModel>(
-        this.filePath,
-        (user as unknown) as QueryParams,
-      )
+      .getSingleObject<UserModel>(this.filePath, user as unknown as QueryParams)
       .pipe(
         map((user: SuccessfulRequest<UserModel | null>) => {
           if (user.result) {

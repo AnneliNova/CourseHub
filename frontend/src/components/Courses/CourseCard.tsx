@@ -6,62 +6,62 @@ interface CourseCardProps {
   title: string;
   description: string;
   duration: number;
-  authors: string[]; 
-  creationDate: string; 
+  authors: string[];
+  creationDate: string;
   onShow?: () => void;
   onDelete?: () => void;
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({ 
-  title, 
-  description, 
-  duration, 
-  authors, 
+const CourseCard: React.FC<CourseCardProps> = ({
+  title,
+  description,
+  duration,
+  authors,
   creationDate,
-  onShow, 
-  onDelete, 
+  onShow,
+  onDelete,
 }) => {
   const formattedDuration = formatDuration(duration);
   const formattedDate = formatCreationDate(creationDate);
-  const authorsText = authors && authors.length > 0 ? authors.join(', ') : 'No authors';
+  const authorsText =
+    authors && authors.length > 0 ? authors.join(', ') : 'No authors';
 
   return (
-    <div className="p-4 border rounded-lg shadow-md hover:shadow-xl transition duration-300 bg-white flex justify-between items-start space-x-6">
-      <div className="flex-1 min-w-0">
-        <h3 className="text-2xl font-bold mb-2 text-blue-700">{title}</h3>
-        <p className="text-gray-600 mb-4 line-clamp-3 overflow-hidden text-sm md:text-base">
-          {description}
-        </p>
+    <div className="card" style={{ display: 'flex', gap: 16, justifyContent: 'space-between' }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <h2 style={{ marginBottom: 8 }}>{title}</h2>
+        <p style={{ margin: 0, color: 'var(--muted)' }}>{description}</p>
       </div>
 
-      <div className="w-64 flex flex-col items-start justify-between space-y-3 pt-1 min-w-[250px]">
-        <div className="text-sm text-gray-700 space-y-1 w-full">
-          <p className="flex justify-between w-full">
-            <span className="font-semibold text-gray-800">Duration:</span>
-            <span className="font-medium">{formattedDuration}</span>
-          </p>
+      <div style={{ width: 280, display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ fontSize: 14, color: 'var(--text)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10 }}>
+            <strong>Duration:</strong>
+            <span>{formattedDuration}</span>
+          </div>
 
-          <p className="flex justify-between w-full">
-            <span className="font-semibold text-gray-800">Created:</span>
-            <span className="font-medium">{formattedDate}</span>
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginTop: 6 }}>
+            <strong>Created:</strong>
+            <span>{formattedDate}</span>
+          </div>
 
-          <p className="flex flex-col items-start w-full mt-2">
-            <span className="font-semibold text-gray-800 mb-1">Authors:</span>
-            <span className="text-gray-600 text-xs italic break-words w-full">{authorsText}</span>
-          </p>
+          <div style={{ marginTop: 10 }}>
+            <strong>Authors:</strong>
+            <div style={{ marginTop: 4, color: 'var(--muted)', fontSize: 13 }}>{authorsText}</div>
+          </div>
         </div>
 
-        <div className="flex space-x-2 mt-4 self-end">
-          <button 
-            onClick={onShow}
-            className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-150 text-sm"
-          >
-            Show Course
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 6 }}>
+          <button type="button" onClick={onShow}>
+            Show course
           </button>
-          <button 
+          <button
+            type="button"
             onClick={onDelete}
-            className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-150 text-sm"
+            style={{
+              background: 'var(--danger)',
+              borderColor: 'rgba(220, 38, 38, 0.25)',
+            }}
           >
             Delete
           </button>

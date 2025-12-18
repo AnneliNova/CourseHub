@@ -1,0 +1,554 @@
+/* =========================================
+   CourseHub – Base UI (no Tailwind)
+   ========================================= */
+
+:root {
+  /* Colors */
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --border: #e2e8f0;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --danger: #dc2626;
+  --success: #16a34a;
+
+  /* Sizing */
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 6px 16px rgba(15, 23, 42, 0.08);
+
+  /* Typography */
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 30% 0%, #eef2ff 0%, var(--bg) 55%)
+    no-repeat;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Make default headings look good */
+h1,
+h2,
+h3 {
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+}
+h1 {
+  font-size: 28px;
+}
+h2 {
+  font-size: 22px;
+}
+
+/* =========================================
+   Layout helpers
+   ========================================= */
+
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* A centered page “canvas” */
+main {
+  flex: 1;
+  padding: 28px 16px 44px;
+}
+
+/* If your app doesn't wrap pages in <main>,
+   this still improves basic screens */
+body > div {
+  min-height: 100%;
+}
+
+/* =========================================
+   Cards / containers
+   ========================================= */
+
+.container {
+  width: min(980px, 100%);
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.card--sm {
+  width: min(560px, 100%);
+  margin: 0 auto;
+  padding: 22px;
+}
+
+/* A subtle header zone (in case you have one) */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  background: rgba(246, 247, 251, 0.7);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.75);
+}
+
+header > div,
+header .container {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+header a {
+  font-weight: 600;
+  text-decoration: none;
+}
+header a:hover {
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+/* =========================================
+   Forms (works even without classes)
+   ========================================= */
+
+/* Improve default form spacing even for simple HTML */
+form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  width: min(560px, 100%);
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  margin: 12px 0 6px;
+}
+
+/* Inputs (also applies to your current Login/Registration fields) */
+input,
+select,
+textarea {
+  width: 100%;
+  height: 42px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+textarea {
+  height: auto;
+  min-height: 96px;
+  padding: 12px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* Buttons */
+button,
+input[type="submit"],
+input[type="button"] {
+  width: auto;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.04s ease, background 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background: var(--primary-hover);
+}
+
+button:active,
+input[type="submit"]:active,
+input[type="button"]:active {
+  transform: translateY(1px);
+}
+
+button:disabled,
+input[type="submit"]:disabled,
+input[type="button"]:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Secondary links under forms */
+form a {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+/* =========================================
+   Lists / tables / course cards basics
+   ========================================= */
+
+ul {
+  padding-left: 18px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 18px 0;
+}
+
+/* A simple grid if you later wrap cards in a container */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+
+.grid .col-12 {
+  grid-column: span 12;
+}
+.grid .col-6 {
+  grid-column: span 6;
+}
+.grid .col-4 {
+  grid-column: span 4;
+}
+
+@media (max-width: 720px) {
+  .grid .col-6,
+  .grid .col-4 {
+    grid-column: span 12;
+  }
+}
+
+/* =========================================
+   Status messages
+   ========================================= */
+
+.alert {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 12px;
+  color: var(--text);
+}
+
+.alert--error {
+  border-color: rgba(220, 38, 38, 0.25);
+  background: rgba(220, 38, 38, 0.06);
+}
+
+.alert--success {
+  border-color: rgba(22, 163, 74, 0.25);
+  background: rgba(22, 163, 74, 0.06);
+}
+
+/* =========================================
+   Small polish
+   ========================================= */
+
+small {
+  color: var(--muted);
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+/* Center page titles that are outside the form */
+main > h1,
+main > h2 {
+  width: min(560px, 100%);
+  margin: 0 auto 14px;
+  text-align: center;
+}
+
+/* Make the auth page link (Login/Registration) visible and centered */
+main > a {
+  display: block;
+  width: min(560px, 100%);
+  margin: 14px auto 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+main > a:hover {
+  text-decoration: none;
+  border-color: rgba(37, 99, 235, 0.35);
+}
+
+
+.auth-page {
+  width: min(560px, 100%);
+  margin: 0 auto;
+}
+
+.auth-title {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.auth-card {
+  margin: 0 auto;
+}
+
+.auth-footer {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.auth-footer a {
+  font-weight: 700;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.auth-footer a:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.1);
+  text-decoration: none;
+}
+
+.help {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.demo {
+  margin-top: 14px;
+  border: 1px dashed rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.demo strong {
+  display: inline-block;
+  min-width: 64px;
+}
+
+.demo-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.demo code {
+  background: rgba(15, 23, 42, 0.06);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.alert {
+  margin-top: 12px;
+}
+
+
+.auth-title--fancy {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 18px;
+  text-align: center;
+  position: relative;
+  color: var(--text);
+  text-shadow: 0 2px 10px rgba(15, 23, 42, 0.12);
+}
+
+.auth-title--fancy::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  border-radius: 999px;
+  margin: 12px auto 0;
+  background: rgba(37, 99, 235, 0.35);
+}
+
+.auth-footer--aligned {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.auth-footer--aligned span {
+  margin: 0;
+}
+
+.auth-footer--aligned a {
+  line-height: 1;
+  padding: 7px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ================= Header ================= */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246, 247, 251, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--primary);
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-info {
+  text-align: right;
+  line-height: 1.2;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-role {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(15, 23, 42, 0.06);
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .user-info {
+    display: none;
+  }
+}

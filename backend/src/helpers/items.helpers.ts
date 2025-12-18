@@ -33,28 +33,26 @@ export function getItem(
   id: string,
   filePath: string,
 ): Observable<SuccessfulRequest<ItemModel | string> | FailedRequest> {
-  return jsonReader
-    .getSingleObject<ItemModel>(filePath, { id })
-    .pipe(
-      tap(({ result }: SuccessfulRequest<ItemModel | string>) => {
-        if (!result) {
-          throw new HttpException(
-            { successful: false, result: `Item with id - ${id} was not found` },
-            HttpStatus.NOT_FOUND,
-          );
-        }
-      }),
-      catchError((err: FailedRequest) => {
-        if (err.message === 'Error during file reading.') {
-          throw new HttpException(
-            { successful: false, result: `Item with id - ${id} was not found` },
-            HttpStatus.NOT_FOUND,
-          );
-        }
+  return jsonReader.getSingleObject<ItemModel>(filePath, { id }).pipe(
+    tap(({ result }: SuccessfulRequest<ItemModel | string>) => {
+      if (!result) {
+        throw new HttpException(
+          { successful: false, result: `Item with id - ${id} was not found` },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+    }),
+    catchError((err: FailedRequest) => {
+      if (err.message === 'Error during file reading.') {
+        throw new HttpException(
+          { successful: false, result: `Item with id - ${id} was not found` },
+          HttpStatus.NOT_FOUND,
+        );
+      }
 
-        return throwError(err);
-      }),
-    );
+      return throwError(err);
+    }),
+  );
 }
 
 export function addItem(

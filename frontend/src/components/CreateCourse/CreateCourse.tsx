@@ -1,12 +1,3 @@
-// import React from 'react';
-
-// const CreateCourse: React.FC = () => {
-//   return <div data-testid="create-course-component"></div>;
-// };
-
-// export default CreateCourse;
-
-
 import React from 'react';
 
 const CreateCourse: React.FC = () => {

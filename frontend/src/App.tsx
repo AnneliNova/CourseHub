@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
@@ -9,19 +9,18 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import PrivateRoute from './routing/PrivateRoute';
 
 export default function App() {
+  const token = localStorage.getItem('token');
+
   return (
     <BrowserRouter>
       <Header />
 
       <Routes>
-        {/* Default redirection */}
-        <Route path="/" element={<Navigate to="/courses" />} />
+        <Route path="/" element={token ? <Navigate to="/courses" /> : <Navigate to="/login" />} />
 
-        {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
 
-        {/* Private routes */}
         <Route
           path="/courses"
           element={
@@ -49,7 +48,6 @@ export default function App() {
           }
         />
 
-        {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

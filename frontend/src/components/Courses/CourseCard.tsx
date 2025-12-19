@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatDuration, formatCreationDate } from '../../utils/formatters';
+import { formatCreationDate, formatDuration } from '../../utils/formatters';
 
 interface CourseCardProps {
   id: string | number;
@@ -10,6 +10,7 @@ interface CourseCardProps {
   creationDate: string;
   onShow?: () => void;
   onDelete?: () => void;
+  canDelete?: boolean;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
@@ -20,54 +21,52 @@ const CourseCard: React.FC<CourseCardProps> = ({
   creationDate,
   onShow,
   onDelete,
+  canDelete,
 }) => {
   const formattedDuration = formatDuration(duration);
   const formattedDate = formatCreationDate(creationDate);
-  const authorsText =
-    authors && authors.length > 0 ? authors.join(', ') : 'No authors';
+  const authorsText = authors?.length ? authors.join(', ') : 'No authors';
 
   return (
-    <div className="card" style={{ display: 'flex', gap: 16, justifyContent: 'space-between' }}>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <h2 style={{ marginBottom: 8 }}>{title}</h2>
-        <p style={{ margin: 0, color: 'var(--muted)' }}>{description}</p>
+    <article className="course-card">
+      <div className="course-card__main">
+        <h2 className="course-card__title">{title}</h2>
+        <p className="course-card__desc">{description}</p>
       </div>
 
-      <div style={{ width: 280, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div style={{ fontSize: 14, color: 'var(--text)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10 }}>
+      <div className="course-card__meta">
+        <div className="course-card__kv">
+          <div className="course-card__row">
             <strong>Duration:</strong>
             <span>{formattedDuration}</span>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginTop: 6 }}>
+          <div className="course-card__row">
             <strong>Created:</strong>
             <span>{formattedDate}</span>
           </div>
 
-          <div style={{ marginTop: 10 }}>
+          <div className="course-card__authors">
             <strong>Authors:</strong>
-            <div style={{ marginTop: 4, color: 'var(--muted)', fontSize: 13 }}>{authorsText}</div>
+            <div className="course-card__authorsText" title={authorsText}>
+              {authorsText}
+            </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 6 }}>
+        <div className="course-card__actions">
           <button type="button" onClick={onShow}>
             Show course
           </button>
-          <button
-            type="button"
-            onClick={onDelete}
-            style={{
-              background: 'var(--danger)',
-              borderColor: 'rgba(220, 38, 38, 0.25)',
-            }}
-          >
-            Delete
-          </button>
+
+          {canDelete ? (
+            <button type="button" className="danger" onClick={onDelete}>
+              Delete
+            </button>
+          ) : null}
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

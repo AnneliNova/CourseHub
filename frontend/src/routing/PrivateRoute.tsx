@@ -1,18 +1,16 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
-interface PrivateRouteProps {
-  children: React.ReactNode;
-}
-
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+export default function PrivateRoute({
+  children,
+}: {
+  children: React.ReactElement;
+}) {
+  const location = useLocation();
   const token = localStorage.getItem('token');
 
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
-  return <>{children}</>;
-};
-
-export default PrivateRoute;
+  return children;
+}

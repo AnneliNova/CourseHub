@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiJson } from '../../config/api';
 
 type RegisterResponse =
-  | { successful: true; result?: any; message?: string }
+  | { successful: true; result: string }
   | { successful: false; result?: string; message?: string };
 
 export default function Registration() {
@@ -13,35 +14,36 @@ export default function Registration() {
   const [password, setPassword] = useState('');
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>('');
-  const [success, setSuccess] = useState<string>('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setError('');
     setSuccess('');
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:4000/register', {
+      const { ok, status, data } = await apiJson<RegisterResponse>('/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({
+          name: name.trim() || null,
+          email: email.trim(),
+          password,
+        }),
       });
 
-      const data: RegisterResponse = await res.json().catch(() => ({} as RegisterResponse));
-
-      if (!res.ok || (data as any)?.successful === false) {
-        const statusBased =
-          res.status === 400 ? 'Registration failed. Please check your data.' : `Registration failed (${res.status}).`;
-
-        const msg = (data as any)?.message || (data as any)?.result || statusBased;
+      if (!ok || (data as any)?.successful === false) {
+        const msg =
+          (data as any)?.message ||
+          (data as any)?.result ||
+          (status === 400 ? 'Invalid registration data.' : `Registration failed (${status}).`);
         setError(msg);
         return;
       }
 
-      setSuccess('Account created successfully. You can log in now.');
+      setSuccess('Account created! You can log in now.');
       setTimeout(() => navigate('/login'), 600);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Network error');
@@ -54,6 +56,7 @@ export default function Registration() {
     <main>
       <div className="auth-page">
         <h2 className="auth-title auth-title--fancy">Registration</h2>
+
         <form className="auth-card" onSubmit={handleSubmit}>
           <label>
             Name:
@@ -62,7 +65,7 @@ export default function Registration() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoComplete="name"
-              required
+              placeholder="Optional"
             />
           </label>
 
@@ -87,17 +90,16 @@ export default function Registration() {
               autoComplete="new-password"
               required
             />
-            <small className="help">Use at least 6–8 characters.</small>
           </label>
 
           <button type="submit" disabled={loading}>
-            {loading ? 'Creating...' : 'Register'}
+            {loading ? 'Creating…' : 'Create account'}
           </button>
 
           {error ? <div className="alert alert--error">{error}</div> : null}
           {success ? <div className="alert alert--success">{success}</div> : null}
 
-          <div className="auth-footer">
+          <div className="auth-footer auth-footer--aligned">
             <span>Already have an account?</span>
             <Link to="/login">Login</Link>
           </div>

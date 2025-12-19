@@ -1,24 +1,18 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-
-type User = {
-  name?: string;
-  email?: string;
-  role?: string;
-};
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { clearAuth, getStoredUser } from '../../config/user';
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const token = localStorage.getItem('token');
-  const user: User = JSON.parse(localStorage.getItem('user') || '{}');
-
   const hideHeader =
     location.pathname === '/login' || location.pathname === '/registration';
 
+  const token = localStorage.getItem('token');
+  const user = getStoredUser();
+
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    clearAuth();
     navigate('/login');
   };
 
@@ -27,37 +21,25 @@ export default function Header() {
   return (
     <header className="app-header">
       <div className="header-inner">
-        {/* Logo / Brand */}
-        <Link to="/courses" className="logo">
+        <Link className="logo" to="/courses" aria-label="CourseHub home">
           Course<span>Hub</span>
         </Link>
 
-        {/* Right side */}
         <div className="header-right">
-          {token && (
-            <div className="user-info">
-              <div className="user-name">
-                {user.name || user.email}
-              </div>
-              {user.role && (
-                <div className="user-role">
-                  {user.role}
-                </div>
-              )}
-            </div>
-          )}
-
           {token ? (
-            <button
-              className="logout-btn"
-              data-testid="logout"
-              onClick={logout}
-            >
-              Logout
-            </button>
+            <>
+              <div className="user-info">
+                <div className="user-name">{user?.name || user?.email || 'User'}</div>
+                <div className="user-role">{user?.role || 'user'}</div>
+              </div>
+
+              <button className="logout-btn" data-testid="logout" onClick={logout}>
+                Logout
+              </button>
+            </>
           ) : (
             <Link to="/login">
-              <button>Login</button>
+              <button type="button">Login</button>
             </Link>
           )}
         </div>

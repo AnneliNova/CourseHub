@@ -21,13 +21,14 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --passWithNoTests",
     "test:e2e": "jest --config ./test/jest-e2e.json --passWithNoTests"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint || true",
-      "pre-push": "npm run test || true",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS || true"
-    }
-  },
+"husky": {
+  "hooks": {
+    "pre-commit": "npm run lint || echo \"[husky] lint failed (non-blocking)\"",
+    "pre-push": "npm run test -- --passWithNoTests || echo \"[husky] tests failed (non-blocking)\"",
+    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS || echo \"[husky] commitlint failed (non-blocking)\""
+  }
+},
+
   "dependencies": {
     "@nestjs/common": "^7.5.1",
     "@nestjs/core": "^7.5.1",

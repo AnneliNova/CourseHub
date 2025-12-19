@@ -3,7 +3,6 @@
    ========================================= */
 
 :root {
-  /* Colors */
   --bg: #f6f7fb;
   --surface: #ffffff;
   --text: #0f172a;
@@ -15,14 +14,12 @@
   --danger: #dc2626;
   --success: #16a34a;
 
-  /* Sizing */
   --radius: 14px;
   --radius-sm: 10px;
 
   --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
   --shadow-sm: 0 6px 16px rgba(15, 23, 42, 0.08);
 
-  /* Typography */
   --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
     "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 }
@@ -36,6 +33,7 @@
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -55,13 +53,13 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Make default headings look good */
 h1,
 h2,
 h3 {
   margin: 0 0 14px;
   letter-spacing: -0.02em;
 }
+
 h1 {
   font-size: 28px;
 }
@@ -70,7 +68,7 @@ h2 {
 }
 
 /* =========================================
-   Layout helpers
+   Layout
    ========================================= */
 
 #root {
@@ -79,26 +77,21 @@ h2 {
   flex-direction: column;
 }
 
-/* A centered page “canvas” */
 main {
   flex: 1;
   padding: 28px 16px 44px;
 }
 
-/* If your app doesn't wrap pages in <main>,
-   this still improves basic screens */
-body > div {
-  min-height: 100%;
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 /* =========================================
-   Cards / containers
+   Card / surfaces
    ========================================= */
-
-.container {
-  width: min(980px, 100%);
-  margin: 0 auto;
-}
 
 .card {
   background: var(--surface);
@@ -114,41 +107,88 @@ body > div {
   padding: 22px;
 }
 
-/* A subtle header zone (in case you have one) */
-header {
+/* =========================================
+   Header
+   ========================================= */
+
+.app-header {
   position: sticky;
   top: 0;
-  z-index: 20;
-  backdrop-filter: blur(10px);
-  background: rgba(246, 247, 251, 0.7);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.75);
+  z-index: 50;
+  background: rgba(246, 247, 251, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
 
-header > div,
-header .container {
-  width: min(980px, 100%);
+.header-inner {
+  width: min(1100px, 100%);
   margin: 0 auto;
-  padding: 14px 16px;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
   justify-content: space-between;
 }
 
-header a {
-  font-weight: 600;
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
   text-decoration: none;
 }
-header a:hover {
+.logo span {
+  color: var(--primary);
+}
+.logo:hover {
   text-decoration: none;
-  opacity: 0.9;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-info {
+  text-align: right;
+  line-height: 1.2;
+}
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+.user-role {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.logout-btn:hover {
+  background: rgba(15, 23, 42, 0.06);
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+@media (max-width: 520px) {
+  .user-info {
+    display: none;
+  }
 }
 
 /* =========================================
-   Forms (works even without classes)
+   Forms
    ========================================= */
 
-/* Improve default form spacing even for simple HTML */
 form {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -166,7 +206,6 @@ label {
   margin: 12px 0 6px;
 }
 
-/* Inputs (also applies to your current Login/Registration fields) */
 input,
 select,
 textarea {
@@ -208,8 +247,7 @@ input[type="button"] {
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.04s ease, background 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: transform 0.04s ease, background 0.15s ease, box-shadow 0.15s ease;
   box-shadow: var(--shadow-sm);
 }
 
@@ -233,53 +271,29 @@ input[type="button"]:disabled {
   box-shadow: none;
 }
 
-/* Secondary links under forms */
-form a {
-  display: inline-block;
-  margin-top: 12px;
+button.danger {
+  background: var(--danger);
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 13px;
   font-weight: 600;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.btn-ghost:hover {
+  background: rgba(15, 23, 42, 0.06);
 }
 
 /* =========================================
-   Lists / tables / course cards basics
-   ========================================= */
-
-ul {
-  padding-left: 18px;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 18px 0;
-}
-
-/* A simple grid if you later wrap cards in a container */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
-}
-
-.grid .col-12 {
-  grid-column: span 12;
-}
-.grid .col-6 {
-  grid-column: span 6;
-}
-.grid .col-4 {
-  grid-column: span 4;
-}
-
-@media (max-width: 720px) {
-  .grid .col-6,
-  .grid .col-4 {
-    grid-column: span 12;
-  }
-}
-
-/* =========================================
-   Status messages
+   Alerts
    ========================================= */
 
 .alert {
@@ -302,47 +316,8 @@ hr {
 }
 
 /* =========================================
-   Small polish
+   Auth pages
    ========================================= */
-
-small {
-  color: var(--muted);
-}
-
-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 0.95em;
-}
-
-/* Center page titles that are outside the form */
-main > h1,
-main > h2 {
-  width: min(560px, 100%);
-  margin: 0 auto 14px;
-  text-align: center;
-}
-
-/* Make the auth page link (Login/Registration) visible and centered */
-main > a {
-  display: block;
-  width: min(560px, 100%);
-  margin: 14px auto 0;
-  text-align: center;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-}
-
-main > a:hover {
-  text-decoration: none;
-  border-color: rgba(37, 99, 235, 0.35);
-}
-
 
 .auth-page {
   width: min(560px, 100%);
@@ -353,78 +328,6 @@ main > a:hover {
   text-align: center;
   margin-bottom: 14px;
 }
-
-.auth-card {
-  margin: 0 auto;
-}
-
-.auth-footer {
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.4;
-  text-align: center;
-}
-
-.auth-footer a {
-  font-weight: 700;
-  text-decoration: none;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(37, 99, 235, 0.18);
-  background: rgba(37, 99, 235, 0.06);
-}
-
-.auth-footer a:hover {
-  border-color: rgba(37, 99, 235, 0.35);
-  background: rgba(37, 99, 235, 0.1);
-  text-decoration: none;
-}
-
-.help {
-  display: block;
-  margin-top: 6px;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.demo {
-  margin-top: 14px;
-  border: 1px dashed rgba(37, 99, 235, 0.35);
-  background: rgba(37, 99, 235, 0.05);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  font-size: 13px;
-  color: var(--text);
-}
-
-.demo strong {
-  display: inline-block;
-  min-width: 64px;
-}
-
-.demo-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 8px;
-  flex-wrap: wrap;
-}
-
-.demo code {
-  background: rgba(15, 23, 42, 0.06);
-  padding: 2px 6px;
-  border-radius: 8px;
-}
-
-.alert {
-  margin-top: 12px;
-}
-
 
 .auth-title--fancy {
   font-size: 34px;
@@ -447,6 +350,18 @@ main > a:hover {
   background: rgba(37, 99, 235, 0.35);
 }
 
+.auth-footer {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .auth-footer--aligned {
   margin-top: 18px;
   display: flex;
@@ -457,98 +372,385 @@ main > a:hover {
   text-align: center;
 }
 
-.auth-footer--aligned span {
+.auth-footer a {
+  font-weight: 700;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.auth-footer a:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.1);
+  text-decoration: none;
+}
+
+/* =========================================
+   Courses page layout
+   ========================================= */
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.page-title h1 {
   margin: 0;
 }
 
-.auth-footer--aligned a {
-  line-height: 1;
-  padding: 7px 12px;
-  border-radius: 999px;
+.page-subtitle {
+  margin: 6px 0 0;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pill {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  background: rgba(37, 99, 235, 0.06);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
 }
 
-
-/* ================= Header ================= */
-
-.app-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(246, 247, 251, 0.75);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.header-inner {
-  width: min(1100px, 100%);
-  margin: 0 auto;
-  padding: 14px 20px;
+.toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.65);
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.logo span {
-  color: var(--primary);
-}
-
-.logo:hover {
-  text-decoration: none;
-}
-
-.header-right {
+.search {
   display: flex;
+  gap: 10px;
   align-items: center;
+  flex: 1;
+}
+
+.search input {
+  width: 100%;
+}
+
+.toolbar-right {
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Cards grid */
+.grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: stretch;
+}
+
+@media (max-width: 360px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar-right {
+    text-align: right;
+  }
+}
+
+/* Empty state */
+.empty {
+  margin-top: 14px;
+  display: grid;
+  place-items: center;
+}
+
+.empty-card {
+  width: min(720px, 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 18px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.empty-title {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.empty-text {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.empty-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Loading skeleton */
+.skeleton-card {
+  height: 140px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.05),
+    rgba(15, 23, 42, 0.09),
+    rgba(15, 23, 42, 0.05)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* =========================================
+   Course Card (fix: no overlap + nice title)
+   ========================================= */
+
+.course-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.75);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.07);
+  overflow: hidden;
+}
+
+.course-card__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans";
+  color: var(--primary);
+  text-shadow: 0 2px 10px rgba(37, 99, 235, 0.18);
+  line-height: 1.15;
+}
+
+.course-card__desc {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.course-card__meta {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.course-card__kv {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.course-card__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.course-card__authorsText {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.45;
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.course-card__actions {
+  display: flex;
+  gap: 12px;
+  row-gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* =========================================
+   Course Info
+   ========================================= */
+
+.courseinfo-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.courseinfo-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 10px rgba(15, 23, 42, 0.10);
+}
+
+.courseinfo-subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.courseinfo-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
   gap: 14px;
 }
 
-.user-info {
-  text-align: right;
+.courseinfo-description {
+  margin: 10px 0 0;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.kv {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.kv-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.kv-key {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.kv-value {
+  font-size: 13px;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.authors-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.btn-ghost-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.btn-ghost-link:hover {
+  background: rgba(15, 23, 42, 0.06);
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .courseinfo-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   Create Course - authors checkbox alignment
+   ========================================= */
+
+.authors-box {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(0,0,0,0.02);
+}
+
+.author-item {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
   line-height: 1.2;
 }
 
-.user-name {
-  font-size: 14px;
-  font-weight: 600;
+.author-item__checkbox {
+  width: 16px;
+  height: 16px;
 }
 
-.user-role {
-  font-size: 12px;
-  color: var(--muted);
-  text-transform: capitalize;
-}
-
-.logout-btn {
-  background: transparent;
-  border: 1px solid var(--border);
+.author-item__name {
   color: var(--text);
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.logout-btn:hover {
-  background: rgba(15, 23, 42, 0.06);
-  border-color: rgba(15, 23, 42, 0.2);
-}
-
-/* Responsive */
-@media (max-width: 520px) {
-  .user-info {
-    display: none;
-  }
 }

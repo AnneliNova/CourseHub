@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiJson, authHeaders } from '../../config/api';
+import { setStoredUser } from '../../config/user';
 
 type LoginResponse =
   | { successful: true; result: string; user?: { name?: string; email?: string } }
+  | { successful: false; result?: string; message?: string };
+
+type MeResponse =
+  | { successful: true; result: { id: string; name: string | null; email: string; role: string } }
   | { successful: false; result?: string; message?: string };
 
 export default function Login() {
@@ -16,32 +22,25 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setError('');
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:4000/login', {
+      const { ok, status, data } = await apiJson<LoginResponse>('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
-      const data: LoginResponse = await res.json().catch(() => ({} as LoginResponse));
-
-      if (!res.ok || (data as any)?.successful === false) {
+      if (!ok || (data as any)?.successful === false) {
         const statusBased =
-          res.status === 400 || res.status === 401
-            ? 'Invalid email or password.'
-            : `Login failed (${res.status}).`;
-
+          status === 400 || status === 401 ? 'Invalid email or password.' : `Login failed (${status}).`;
         const msg = (data as any)?.message || (data as any)?.result || statusBased;
         setError(msg);
         return;
       }
 
       const token = (data as any)?.result;
-
       if (!token) {
         setError('Login failed: token was not returned by the server.');
         return;
@@ -49,9 +48,29 @@ export default function Login() {
 
       localStorage.setItem('token', token);
 
-      const user = (data as any)?.user;
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
+      // Try to load /users/me to get role (admin/user). If fails — still allow login.
+      try {
+        const me = await apiJson<MeResponse>('/users/me', {
+          method: 'GET',
+          headers: authHeaders(),
+        });
+
+        if (me.ok && (me.data as any)?.successful !== false && (me.data as any)?.result) {
+          const u = (me.data as any).result;
+          setStoredUser({
+            id: u.id,
+            name: u.name,
+            email: u.email,
+            role: u.role,
+          });
+        } else {
+          // fallback to login payload user (may not include role)
+          const u = (data as any)?.user;
+          if (u) setStoredUser({ name: u.name, email: u.email });
+        }
+      } catch {
+        const u = (data as any)?.user;
+        if (u) setStoredUser({ name: u.name, email: u.email });
       }
 
       navigate('/courses');
@@ -77,7 +96,6 @@ export default function Login() {
               autoComplete="email"
               required
             />
-            {/* <small className="help"> email.</small> */}
           </label>
 
           <label>
@@ -93,7 +111,7 @@ export default function Login() {
           </label>
 
           <button type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Logging in…' : 'Login'}
           </button>
 
           {error ? <div className="alert alert--error">{error}</div> : null}

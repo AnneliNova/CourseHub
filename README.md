@@ -137,6 +137,12 @@ password: user
 ## 📸 Скриншоти
 
 
+![photo_![photo_2025-12-20_07-44-57](https://github.com/user-attachments/assets/7d3faf52-322a-497c-bdff-a66f3a02c9f9)
+![photo_2025-12-20_07-45-07](https://github.com/user-attachments/assets/0fc4fa13-5b75-47b7-8c1b-4e49854bc51f)
+2025-12-22_11-35-29](https://github.com/user-attachments/assets/4e3ada3f-fd16-4400-acc1-f555a8b0bfaa)
+![photo_2025-12-20_07-45-10](https://github.com/user-attachments/assets/1f00a70f-d714-4582-9f44-91b67edb630e)
+![photo_2025-12-20_07-45-05](https://github.com/user-attachments/assets/c28dd8f5-9f5a-4b17-bf4b-9c4215388ec6)
+
 
 ## 📄 License
 

@@ -1,7 +1,6 @@
 # CourseHub
 
-# Переглянути проект https://course-dnyduq6ea-annelis-projects-d302cb2b.vercel.app/login
-
+# Переглянути проект https://course-iuabfq7gn-annelis-projects-d302cb2b.vercel.app/login
 CourseHub — це повноцінна full-stack платформа для управління курсами, створена на основі **React + TypeScript (frontend)** та **NestJS (backend)**.
 
 Проєкт включає:
